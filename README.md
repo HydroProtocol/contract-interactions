@@ -1,6 +1,6 @@
 # Intro
 
-This repository shows how to interactive with hydro v2 margin smart contract.
+This repository shows how to interactive with hydro v2 margin [smart contract](https://github.com/HydroProtocol/protocol).
 
 # Examples
 
