@@ -28,16 +28,15 @@ There are 4 places to hold funds.
 
 There are 7 actions defined in hydro contract for funds operations. They are `Deposit`, `Withdraw`, `Borrow`, `Repay`, `Supply`, `poolWithdraw` and `Transfer`.
 
-| Actions      | Funds moving path                                  |
-| ------------ | -------------------------------------------------- |
-| deposit      | from `ethereum wallet` to `trading balance`        |
-| withdraw     | from `trading balance` to `ethereum wallet`        |
-| transfer     | 1) between `trading balance` and `margin balance`. |
-|              | 2) between `different margin balances`.            |
-| borrow       | from `funding pool` to `margin balance`            |
-| repay        | from `margin balance` to `funding pool`            |
-| supply       | from `trading balance` to `funding pool`           |
-| poolWithdraw | from `funding pool` to `trading balance`           |
+| Actions      | Funds moving path                                                                                |
+| ------------ | ------------------------------------------------------------------------------------------------ |
+| deposit      | from `ethereum wallet` to `trading balance`                                                      |
+| withdraw     | from `trading balance` to `ethereum wallet`                                                      |
+| transfer     | 1) between `trading balance` and `margin balance`.<br /> 2) between `different margin balances`. |
+| borrow       | from `funding pool` to `margin balance`                                                          |
+| repay        | from `margin balance` to `funding pool`                                                          |
+| supply       | from `trading balance` to `funding pool`                                                         |
+| poolWithdraw | from `funding pool` to `trading balance`                                                         |
 
 ![actions](https://raw.githubusercontent.com/hydroprotocol/contract-interations/master/assets/funds-operations.png)
 
