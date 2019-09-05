@@ -4,7 +4,7 @@ This repository shows how to interactive with hydro v2 margin [smart contract](h
 
 # Examples
 
-## read or monitor the contract status
+## 1. read or monitor the contract status
 
 This example shows how to read data from contract.
 
@@ -15,7 +15,7 @@ npm run example
 
 [View example code](./examples/reader.js)
 
-## move funds for programmed trading
+## 2. move funds for programmed trading
 
 There are 4 places to hold funds.
 
@@ -44,7 +44,7 @@ This example will show you how to move your funds and how to perform and combine
 
 [View example code](./examples/funds.js)
 
-## participate in auctions
+## 3. participate in auctions
 
 [View example code](./examples/auction.js)
 
