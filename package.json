@@ -1,13 +1,14 @@
 {
+  "private": true,
   "name": "contract-interations",
   "version": "0.0.1",
-  "description": "Sample codes for interaction with hydro protocol contract.",
+  "description": "Example codes for interaction with hydro protocol contract.",
   "main": "index.js",
   "scripts": {
     "example": "ETHEREUM_NODE_URL=https://mainnet.infura.io/v3/eda3324f594d4892bfddd7d165358aa8 node examples/reader.js"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "david@ddex.io",
+  "license": "MIT",
   "dependencies": {
     "bignumber.js": "^9.0.0",
     "ethers": "^4.0.36",
