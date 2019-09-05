@@ -6,7 +6,7 @@
  *  Name             │ Location         Description
  * ══════════════════╪════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
  *  Ethereum Wallet  │ Private Wallet   Your personal wallet. eg: Metamask.
- *  Tranding Balance │ Hydro Contract   Balances here can be withdrawn at any time. Can be used to place order for spot trading.
+ *  Trading Balance  │ Hydro Contract   Balances here can be withdrawn at any time. Can be used to place order for spot trading.
  *  Margin Balance   │ Hydro Contract   Balances here can be used as collateral to borrow asset into the corresponding market for margin trading.
  *  Funding Balance  │ Hydro Contract   Balances in funding pool earn interest. Traders can borrow funds from here for margin trading.
  *

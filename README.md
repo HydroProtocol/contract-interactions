@@ -4,7 +4,7 @@ This repository shows how to interactive with hydro v2 margin [smart contract](h
 
 # Examples
 
-## 1. read or monitor the contract status
+## 1. Read or monitor the contract status
 
 This example shows how to read data from contract.
 
@@ -15,16 +15,16 @@ npm run example
 
 [View example code](./examples/reader.js)
 
-## 2. move funds for programmed trading
+## 2. Move funds for programmed trading
 
 There are 4 places to hold funds.
 
-| Name             | Location       | Description                                                                                               |
-| ---------------- | -------------- | --------------------------------------------------------------------------------------------------------- |
-| Ethereum Wallet  | Private Wallet | Your personal wallet. eg: Metamask.                                                                       |
-| Tranding Balance | Hydro Contract | Balances here can be withdrawn at any time. Can be used to place order for spot trading.                  |
-| Margin Balance   | Hydro Contract | Balances here can be used as collateral to borrow asset into the corresponding market for margin trading. |
-| Funding Balance  | Hydro Contract | Balances in funding pool earn interest. Traders can borrow funds from here for margin trading.            |
+| Name            | Location       | Description                                                                                               |
+| --------------- | -------------- | --------------------------------------------------------------------------------------------------------- |
+| Ethereum Wallet | Private Wallet | Your personal wallet. eg: Metamask.                                                                       |
+| Trading Balance | Hydro Contract | Balances here can be withdrawn at any time. Can be used to place order for spot trading.                  |
+| Margin Balance  | Hydro Contract | Balances here can be used as collateral to borrow asset into the corresponding market for margin trading. |
+| Funding Balance | Hydro Contract | Balances in funding pool earn interest. Traders can borrow funds from here for margin trading.            |
 
 There are 7 actions defined in hydro contract for funds operations. They are `Deposit`, `Withdraw`, `Borrow`, `Repay`, `Supply`, `poolWithdraw` and `Transfer`.
 
@@ -44,7 +44,7 @@ This example will show you how to move your funds and how to perform and combine
 
 [View example code](./examples/funds.js)
 
-## 3. participate in auctions
+## 3. Participate in auctions
 
 [View example code](./examples/auction.js)
 
