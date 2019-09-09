@@ -11,6 +11,7 @@ const {
   displayMarket,
   displayAsset,
   isEther,
+  isDai,
   toHumanReadableDecimal,
   toHumanReadablePercentage
 } = require("../src/helper");
@@ -57,7 +58,11 @@ const exampleShowMarketStatus = async () => {
     const assetContract = getErc20TokenContract(assetAddress);
 
     const [symbol, decimals, asset, price] = await Promise.all([
-      isEther(assetAddress) ? "ETH" : assetContract.methods.symbol().call(),
+      isEther(assetAddress)
+        ? "ETH"
+        : isDai(assetAddress)
+        ? "DAI"
+        : assetContract.methods.symbol().call(),
       isEther(assetAddress) ? 18 : assetContract.methods.decimals().call(),
       hydro.methods.getAsset(assetAddress).call(), // get Asset
       hydro.methods.getAssetOraclePrice(assetAddress).call() // get Asset oracle price
@@ -66,6 +71,7 @@ const exampleShowMarketStatus = async () => {
     asset.symbol = symbol;
     asset.decimals = decimals;
     asset.address = assetAddress;
+
     asset.price = new BigNumber(price)
       .div(new BigNumber(10).pow(18 + 18 - decimals))
       .toFixed(2);

@@ -3,6 +3,9 @@ const BigNumber = require("bignumber.js");
 const isEther = address =>
   address.toLowerCase() === "0x000000000000000000000000000000000000000e";
 
+const isDai = address =>
+  address.toLowerCase() === "0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359";
+
 const displayMarket = market => {
   console.group();
   console.log(`baseAsset: ${market.baseAsset}
@@ -43,5 +46,6 @@ module.exports = {
   displayAsset,
   toHumanReadableDecimal,
   toHumanReadablePercentage,
-  isEther
+  isEther,
+  isDai
 };
