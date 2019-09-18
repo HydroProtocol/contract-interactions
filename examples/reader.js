@@ -2,6 +2,7 @@
  * This example shows how to read status from hydro protocol v2 contract.
  * `exampleShowMarketStatus` is used to get global status.
  * `exampleShowAccountStatus` is used to get personal status.
+ * `exampleShowAuctionStatus` is used to get current auction status of a market.
  */
 
 const hydro = require("../src/hydro");
@@ -10,6 +11,7 @@ const { getErc20TokenContract } = require("../src/erc20");
 const {
   displayMarket,
   displayAsset,
+  displayAuction,
   isEther,
   isDai,
   toHumanReadableDecimal,
@@ -29,10 +31,6 @@ const exampleShowMarketStatus = async () => {
       marketCount > 1 ? "markets" : "market"
     } in hydro protocol contract.\n`
   );
-
-  const auctionCount = await hydro.methods.getAuctionsCount().call();
-
-  console.log(`There are ${auctionCount} auctions happened in the past.\n`);
 
   for (let i = 0; i < marketCount; i++) {
     console.log(`Market #${i}:`);
@@ -100,8 +98,14 @@ const exampleShowMarketStatus = async () => {
     ]);
     console.log(`${asset.symbol}`);
     console.group();
-    console.log(`TotalSupply:`, toHumanReadableDecimal(totalSupply));
-    console.log(`TotalBorrow:`, toHumanReadableDecimal(totalBorrow));
+    console.log(
+      `TotalSupply:`,
+      toHumanReadableDecimal(totalSupply, asset.decimals)
+    );
+    console.log(
+      `TotalBorrow:`,
+      toHumanReadableDecimal(totalBorrow, asset.decimals)
+    );
     console.log(
       `borrow interest rate:`,
       toHumanReadablePercentage(interestRates[0])
@@ -110,7 +114,10 @@ const exampleShowMarketStatus = async () => {
       `supply interest rate:`,
       toHumanReadablePercentage(interestRates[1])
     );
-    console.log(`insurance:`, toHumanReadableDecimal(insurance));
+    console.log(
+      `insurance:`,
+      toHumanReadableDecimal(insurance, asset.decimals)
+    );
 
     console.groupEnd();
     console.log();
@@ -222,12 +229,31 @@ const exampleShowAccountStatus = async address => {
       `${asset.symbol}: ${toHumanReadableDecimal(balance, asset.decimals)}`
     );
   }
+  console.groupEnd();
+};
+
+const exampleShowAuctionStatus = async () => {
+  const auctionCount = await hydro.methods.getAuctionsCount().call();
+  const currentAuctionIds = await hydro.methods.getCurrentAuctions().call();
+  console.log(
+    `\nThere are ${auctionCount -
+      currentAuctionIds.length} auctions happened in the past. ${
+      currentAuctionIds.length
+    } auctions in progress\n`
+  );
+
+  for (let auctionId of currentAuctionIds) {
+    const auction = await hydro.methods.getAuctionDetails(auctionId).call();
+    console.log(`In progress auction #${auctionId}`);
+    await displayAuction(auction);
+  }
 };
 
 const runExamples = async () => {
   await exampleShowMarketStatus();
   const exampleAddress = "0x1A671e90dB05AF4B128Ac4faEF01F5A36De468ad";
-  exampleShowAccountStatus(exampleAddress);
+  await exampleShowAccountStatus(exampleAddress);
+  await exampleShowAuctionStatus();
 };
 
 runExamples();
