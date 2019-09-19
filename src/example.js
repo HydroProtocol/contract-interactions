@@ -4,7 +4,7 @@ const {
   displayMarket,
   displayAsset,
   isEther,
-  toHumanReadableDecimal,
+  toHumanReadableStr,
   toHumanReadablePercentage
 } = require("./helper");
 
@@ -83,8 +83,8 @@ const run = async () => {
     ]);
     console.log(`${asset.symbol}`);
     console.group();
-    console.log(`TotalSupply:`, toHumanReadableDecimal(totalSupply));
-    console.log(`TotalBorrow:`, toHumanReadableDecimal(totalBorrow));
+    console.log(`TotalSupply:`, toHumanReadableStr(totalSupply));
+    console.log(`TotalBorrow:`, toHumanReadableStr(totalBorrow));
     console.log(
       `borrow interest rate:`,
       toHumanReadablePercentage(interestRates[0])
@@ -93,7 +93,7 @@ const run = async () => {
       `supply interest rate:`,
       toHumanReadablePercentage(interestRates[1])
     );
-    console.log(`insurance:`, toHumanReadableDecimal(insurance));
+    console.log(`insurance:`, toHumanReadableStr(insurance));
 
     console.groupEnd();
   }

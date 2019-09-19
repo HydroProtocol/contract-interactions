@@ -1,5 +1,5 @@
 const BigNumber = require("bignumber.js");
-const { getErc20TokenContract } = require("./erc20");
+const { getErc20Decimal } = require("./erc20");
 
 const isEther = address =>
   address.toLowerCase() === "0x000000000000000000000000000000000000000e";
@@ -9,8 +9,6 @@ const isDai = address =>
 
 const isUSDT = address =>
   address.toLowerCase() === "0xdac17f958d2ee523a2206206994597c13d831ec7";
-
-var decimalMap = { "0x000000000000000000000000000000000000000e": 18 };
 
 const displayMarket = market => {
   console.group();
@@ -44,37 +42,26 @@ const displayAuction = async auction => {
 marketID: ${auction.marketID}
 debtAsset: ${auction.debtAsset}
 collateralAsset: ${auction.collateralAsset}
-leftDebtAmount: ${await tokenBalanceToHumanReadable(
-    auction.debtAsset,
-    auction.leftDebtAmount
+leftDebtAmount: ${toHumanReadableStr(
+    auction.leftDebtAmount,
+    await getErc20Decimal(auction.debtAsset)
   )}
-leftCollateralAmount: ${await tokenBalanceToHumanReadable(
-    auction.collateralAsset,
-    auction.leftCollateralAmount
+leftCollateralAmount: ${toHumanReadableStr(
+    auction.leftCollateralAmount,
+    await getErc20Decimal(auction.collateralAsset)
   )}
 ratio: ${toHumanReadablePercentage(auction.ratio)}
-price: ${toHumanReadableDecimal(
-    auction.price,
-    18 -
-      decimalMap[auction.collateralAsset.toLowerCase()] +
-      decimalMap[auction.debtAsset.toLowerCase()]
-  )}
+price: ${toHumanReadableStr(auction.price)}
 finished: ${auction.finished}
   `);
   console.groupEnd();
 };
 
-const tokenBalanceToHumanReadable = async (tokenAddresss, x) => {
-  tokenAddresss = tokenAddresss.toLowerCase();
-  if (!(tokenAddresss in decimalMap)) {
-    const erc20 = getErc20TokenContract(tokenAddresss);
-    decimalMap[tokenAddresss] = await erc20.methods.decimals().call();
-  }
-  return toHumanReadableDecimal(x, decimalMap[tokenAddresss]);
-};
+const toHumanReadableStr = (x, decimals = 18) =>
+  new BigNumber(x).div(new BigNumber(10).pow(decimals)).toFixed(2);
 
 const toHumanReadableDecimal = (x, decimals = 18) =>
-  new BigNumber(x).div(new BigNumber(10).pow(decimals)).toFixed(2);
+  new BigNumber(x).div(new BigNumber(10).pow(decimals));
 
 const toHumanReadablePercentage = x =>
   new BigNumber(x)
@@ -86,6 +73,7 @@ module.exports = {
   displayMarket,
   displayAsset,
   displayAuction,
+  toHumanReadableStr,
   toHumanReadableDecimal,
   toHumanReadablePercentage,
   isEther,

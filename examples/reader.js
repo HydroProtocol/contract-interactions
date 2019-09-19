@@ -14,7 +14,7 @@ const {
   displayAuction,
   isEther,
   isDai,
-  toHumanReadableDecimal,
+  toHumanReadableStr,
   toHumanReadablePercentage
 } = require("../src/helper");
 
@@ -100,11 +100,11 @@ const exampleShowMarketStatus = async () => {
     console.group();
     console.log(
       `TotalSupply:`,
-      toHumanReadableDecimal(totalSupply, asset.decimals)
+      toHumanReadableStr(totalSupply, asset.decimals)
     );
     console.log(
       `TotalBorrow:`,
-      toHumanReadableDecimal(totalBorrow, asset.decimals)
+      toHumanReadableStr(totalBorrow, asset.decimals)
     );
     console.log(
       `borrow interest rate:`,
@@ -114,10 +114,7 @@ const exampleShowMarketStatus = async () => {
       `supply interest rate:`,
       toHumanReadablePercentage(interestRates[1])
     );
-    console.log(
-      `insurance:`,
-      toHumanReadableDecimal(insurance, asset.decimals)
-    );
+    console.log(`insurance:`, toHumanReadableStr(insurance, asset.decimals));
 
     console.groupEnd();
     console.log();
@@ -174,24 +171,23 @@ const exampleShowAccountStatus = async address => {
     console.group();
     console.log(`liquidatable: ${liquidatable}`);
     console.log(
-      `base balance: ${toHumanReadableDecimal(
-        baseBalance,
-        baseAsset.decimals
-      )} ${baseAsset.symbol}`
-    );
-    console.log(
-      `base debt: ${toHumanReadableDecimal(baseDebt, baseAsset.decimals)} ${
+      `base balance: ${toHumanReadableStr(baseBalance, baseAsset.decimals)} ${
         baseAsset.symbol
       }`
     );
     console.log(
-      `quote balance: ${toHumanReadableDecimal(
+      `base debt: ${toHumanReadableStr(baseDebt, baseAsset.decimals)} ${
+        baseAsset.symbol
+      }`
+    );
+    console.log(
+      `quote balance: ${toHumanReadableStr(
         quoteBalance,
         quoteAsset.decimals
       )} ${quoteAsset.symbol}`
     );
     console.log(
-      `quote debt: ${toHumanReadableDecimal(quoteDebt, quoteAsset.decimals)} ${
+      `quote debt: ${toHumanReadableStr(quoteDebt, quoteAsset.decimals)} ${
         quoteAsset.symbol
       }`
     );
@@ -212,7 +208,7 @@ const exampleShowAccountStatus = async address => {
     }
 
     console.log(
-      `${asset.symbol}: ${toHumanReadableDecimal(balance, asset.decimals)}`
+      `${asset.symbol}: ${toHumanReadableStr(balance, asset.decimals)}`
     );
   }
   console.groupEnd();
@@ -226,7 +222,7 @@ const exampleShowAccountStatus = async address => {
       .getAmountSupplied(asset.address, address)
       .call();
     console.log(
-      `${asset.symbol}: ${toHumanReadableDecimal(balance, asset.decimals)}`
+      `${asset.symbol}: ${toHumanReadableStr(balance, asset.decimals)}`
     );
   }
   console.groupEnd();
