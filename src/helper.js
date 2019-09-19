@@ -7,9 +7,6 @@ const isEther = address =>
 const isDai = address =>
   address.toLowerCase() === "0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359";
 
-const isUSDT = address =>
-  address.toLowerCase() === "0xdac17f958d2ee523a2206206994597c13d831ec7";
-
 const displayMarket = market => {
   console.group();
   console.log(`baseAsset: ${market.baseAsset}
@@ -38,27 +35,29 @@ current price(USD): ${asset.price}
 
 const displayAuction = async auction => {
   console.group();
+  const debtDecimal = await getErc20Decimal(auction.debtAsset);
+  const collateralDecimal = await getErc20Decimal(auction.collateralAsset);
   console.log(`borrower: ${auction.borrower}
 marketID: ${auction.marketID}
 debtAsset: ${auction.debtAsset}
 collateralAsset: ${auction.collateralAsset}
-leftDebtAmount: ${toHumanReadableStr(
-    auction.leftDebtAmount,
-    await getErc20Decimal(auction.debtAsset)
-  )}
+leftDebtAmount: ${toHumanReadableStr(auction.leftDebtAmount, debtDecimal)}
 leftCollateralAmount: ${toHumanReadableStr(
     auction.leftCollateralAmount,
-    await getErc20Decimal(auction.collateralAsset)
+    collateralDecimal
   )}
 ratio: ${toHumanReadablePercentage(auction.ratio)}
-price: ${toHumanReadableStr(auction.price)}
+price: ${toHumanReadableStr(
+    auction.price,
+    18 - collateralDecimal + debtDecimal
+  )}
 finished: ${auction.finished}
   `);
   console.groupEnd();
 };
 
 const toHumanReadableStr = (x, decimals = 18) =>
-  new BigNumber(x).div(new BigNumber(10).pow(decimals)).toFixed(2);
+  new BigNumber(x).div(new BigNumber(10).pow(decimals)).toFixed(4);
 
 const toHumanReadableDecimal = (x, decimals = 18) =>
   new BigNumber(x).div(new BigNumber(10).pow(decimals));

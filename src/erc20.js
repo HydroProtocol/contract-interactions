@@ -11,7 +11,17 @@ const getErc20Decimal = async address => {
   return await erc20.methods.decimals().call();
 };
 
+const getErc20Symbol = async address => {
+  if (address.toLowerCase() === "0x000000000000000000000000000000000000000e")
+    return "ETH";
+  if (address.toLowerCase() === "0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359")
+    return "DAI";
+  const erc20 = getErc20TokenContract(address);
+  return await erc20.methods.symbol().call();
+};
+
 module.exports = {
   getErc20TokenContract,
-  getErc20Decimal
+  getErc20Decimal,
+  getErc20Symbol
 };

@@ -7,13 +7,16 @@
 
 const hydro = require("../src/hydro");
 const { web3 } = require("../src/web3");
-const { getErc20TokenContract } = require("../src/erc20");
+const {
+  getErc20TokenContract,
+  getErc20Decimal,
+  getErc20Symbol
+} = require("../src/erc20");
 const {
   displayMarket,
   displayAsset,
   displayAuction,
   isEther,
-  isDai,
   toHumanReadableStr,
   toHumanReadablePercentage
 } = require("../src/helper");
@@ -53,15 +56,10 @@ const exampleShowMarketStatus = async () => {
 
   for (let i = 0; i < assetsArray.length; i++) {
     const assetAddress = assetsArray[i];
-    const assetContract = getErc20TokenContract(assetAddress);
 
     const [symbol, decimals, asset, price] = await Promise.all([
-      isEther(assetAddress)
-        ? "ETH"
-        : isDai(assetAddress)
-        ? "DAI"
-        : assetContract.methods.symbol().call(),
-      isEther(assetAddress) ? 18 : assetContract.methods.decimals().call(),
+      getErc20Symbol(assetAddress),
+      getErc20Decimal(assetAddress),
       hydro.methods.getAsset(assetAddress).call(), // get Asset
       hydro.methods.getAssetOraclePrice(assetAddress).call() // get Asset oracle price
     ]);
