@@ -197,13 +197,7 @@ const exampleShowAccountStatus = async address => {
   console.group();
   for (let i = 0; i < assets.length; i++) {
     const asset = assets[i];
-    const assetContract = getErc20TokenContract(asset.address);
-    let balance;
-    if (isEther(asset.address)) {
-      balance = await web3.eth.getBalance(address);
-    } else {
-      balance = await assetContract.methods.balanceOf(address).call();
-    }
+    let balance = await hydro.methods.balanceOf(asset.address, address).call();
 
     console.log(
       `${asset.symbol}: ${toHumanReadableStr(balance, asset.decimals)}`
